@@ -1,0 +1,36 @@
+{
+    "GAN":{
+        "Critic":{
+
+        },
+        "Generator":{
+            
+        }
+    },
+
+    "gamma":0.99,
+    
+    "optim":{
+        "Critic":{
+            "name": "adam",
+            "lr": 3e-4,
+            "decay":3e-5,
+            "eps":1e-7,
+            "clipping":false
+        },
+        "Generator":{
+            "name": "adam",
+            "lr": 3e-4,
+            "decay":3e-5,
+            "eps":1e-7,
+            "clipping":false
+        }
+    },
+
+    "sPath": "./save/WGAN",
+    "writeTMode":true,
+    "tPath":"./tensorboard/WGAN/",
+    "device":"cuda:0",
+    "lPath":false,
+    "trainMode":true
+}
