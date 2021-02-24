@@ -1,6 +1,10 @@
 {
     "GAN":{
         "Critic":{
+            "module00":{
+                "netCat":"CNET",
+                ""
+            }
 
         },
         "Generator":{
@@ -8,26 +12,30 @@
         }
     },
 
-    "gamma":0.99,
+    "clippingP":0.01,
+    "batchSize":64,
+    "nCritic":5,
+    "epoch":60,
+    "coeffGP":10,
     
     "optim":{
         "Critic":{
-            "name": "adam",
-            "lr": 3e-4,
+            "name": "rmsprop",
+            "lr": 5e-5,
             "decay":3e-5,
             "eps":1e-7,
             "clipping":false
         },
         "Generator":{
-            "name": "adam",
-            "lr": 3e-4,
+            "name": "rmsprop",
+            "lr": 5e-5,
             "decay":3e-5,
             "eps":1e-7,
             "clipping":false
         }
     },
 
-    "sPath": "./save/WGAN",
+    "sPath": "./save/WGAN/",
     "writeTMode":true,
     "tPath":"./tensorboard/WGAN/",
     "device":"cuda:0",
