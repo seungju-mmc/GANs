@@ -49,6 +49,7 @@ class WGANnn(torch.nn.Module):
         gCritic = self.criticForward(gState)
 
         Loss = torch.mean(gCritic - rCritic)
+        
 
         return Loss
 

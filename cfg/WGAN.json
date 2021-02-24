@@ -2,13 +2,42 @@
     "GAN":{
         "Critic":{
             "module00":{
-                "netCat":"CNET",
-                ""
+                "netCat":"CNN2D",
+                "iSize":3,
+                "nLayer":4,
+                "nUnit":[128, 256, 512, 1024],
+                "fSize":[5, 5, 5, 5],
+                "padding":[1, 1, 1, 1],
+                "stride":[2, 2, 2, 2],
+                "act":["leakyRelu", "leakyRelu", "leakyRelu", "linear"],
+                "linear":false,
+                "input":[0],
+                "prior":0,
+                "BN":[true, true, true, false]
+            },
+            "module01":{
+                "netCat":"GovAvgPooling",
+                "prior":1,
+                "prevNodes":["module00"],
+                "output":true
             }
-
         },
         "Generator":{
-            
+            "module00":{
+                "netCat":"CNNTP2D",
+                "iSize":100,
+                "nLayer":5,
+                "nUnit":[1024, 512, 256, 128, 3],
+                "fSize":[1, 5, 5, 5, 5],
+                "padding":[0, 0, 0, 0, 0],
+                "stride":[2, 2, 2, 2, 2],
+                "act":["relu", "relu", "relu", "relu", "tanh"],
+                "linear":false,
+                "input":[0],
+                "prior":0,
+                "output":true,
+                "BN":[true, true, true, true, false]
+            }
         }
     },
 

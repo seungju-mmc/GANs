@@ -6,6 +6,7 @@ import numpy as np
 
 from dataset import trainloader, testloader, imShow
 from baseline.baseline.utils import jsonParser
+from network import WGANnn
 
 
 parser = argparse.ArgumentParser(
@@ -36,14 +37,3 @@ if __name__ == "__main__":
         print("Loading Configuration File.")
     else:
         RuntimeError("the path is not valid.")
-
-    train = args.train
-
-    if train:
-        dataloader = trainloader
-    else:
-        dataload = testloader
-
-    parser = jsonParser(path)
-
-    data = parser.loadParser()
