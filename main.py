@@ -1,12 +1,6 @@
 import os
-import torch
 import argparse
-
-import numpy as np
-
-from dataset import trainloader, testloader, imShow
-from baseline.baseline.utils import jsonParser
-from network import WGANnn
+from WGAN.trainer import WGANTrainer
 
 
 parser = argparse.ArgumentParser(
@@ -37,3 +31,6 @@ if __name__ == "__main__":
         print("Loading Configuration File.")
     else:
         RuntimeError("the path is not valid.")
+
+    trainer = WGANTrainer(path)
+    trainer.run()

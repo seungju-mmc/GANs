@@ -5,61 +5,85 @@
                 "netCat":"CNN2D",
                 "iSize":3,
                 "nLayer":4,
-                "nUnit":[128, 256, 512, 1024],
-                "fSize":[5, 5, 5, 5],
-                "padding":[1, 1, 1, 1],
-                "stride":[2, 2, 2, 2],
-                "act":["leakyRelu", "leakyRelu", "leakyRelu", "linear"],
-                "linear":false,
+                "nUnit":[128, 256, 512],
+                "fSize":[3, 3, 3, -1],
+                "padding":[1, 1, 1],
+                "stride":[2, 2, 2],
+                "act":["leakyRelu", "leakyRelu", "leakyRelu"],
+                "linear":true,
                 "input":[0],
                 "prior":0,
-                "BN":[true, true, true, false]
+                "BN":[false, false, false, false]
             },
             "module01":{
-                "netCat":"GovAvgPooling",
+                "netCat":"MLP",
+                "iSize":8192,
+                "nLayer":1,
+                "fSize":[1],
+                "BN":false,
+                "act":["linear"],
                 "prior":1,
-                "prevNodes":["module00"],
+                "prevNodeNames":["module00"],
                 "output":true
             }
         },
         "Generator":{
             "module00":{
-                "netCat":"CNNTP2D",
+                "netCat":"MLP",
                 "iSize":100,
-                "nLayer":5,
-                "nUnit":[1024, 512, 256, 128, 3],
-                "fSize":[1, 5, 5, 5, 5],
-                "padding":[0, 0, 0, 0, 0],
-                "stride":[2, 2, 2, 2, 2],
-                "act":["relu", "relu", "relu", "relu", "tanh"],
-                "linear":false,
-                "input":[0],
+                "nLayer":1,
+                "fSize":[8192],
+                "BN":true,
+                "act":["relu"],
                 "prior":0,
+                "input":[0]
+            },
+            "module01":{
+                "netCat":"View",
+                "shape":[-1, 512, 4, 4],
+                "prior":1,
+                "prevNodeNames":["module00"]
+            },
+            "module02":{
+                "netCat":"CNNTP2D",
+                "iSize":512,
+                "nLayer":3,
+                "nUnit":[256, 128, 3],
+                "fSize":[4, 4, 4],
+                "padding":[1, 1, 1],
+                "stride":[2, 2, 2],
+                "act":["relu", "relu", "tanh"],
+                "linear":false,
+                "prior":2,
                 "output":true,
-                "BN":[true, true, true, true, false]
+                "BN":[true, true, false],
+                "prevNodeNames":["module01"]
             }
         }
     },
 
-    "clippingP":0.01,
     "batchSize":64,
     "nCritic":5,
-    "epoch":60,
-    "coeffGP":10,
+    "epoch":10000,
+    "lambda":10,
     
     "optim":{
         "Critic":{
-            "name": "rmsprop",
-            "lr": 5e-5,
-            "decay":3e-5,
+            "name": "adam",
+            "lr": 1e-4,
+            "decay":0,
             "eps":1e-7,
+            "beta1":0.5,
+            "beta2":0.9,
             "clipping":false
         },
         "Generator":{
-            "name": "rmsprop",
-            "lr": 5e-5,
-            "decay":3e-5,
+            "name": "adam",
+            "lr": 1e-4,
+            "decay":0,
             "eps":1e-7,
+            "beta1":0.5,
+            "beta2":0.9,
             "clipping":false
         }
     },
